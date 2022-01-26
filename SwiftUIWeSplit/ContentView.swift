@@ -26,6 +26,17 @@ struct ContentView: View {
         return amountPerPerson
     }
     
+    private var finalBillAmount: Double {
+        let checkAmount = Double(checkAmount)
+        let tipAmount = Double(checkAmount + tipAmount)
+        let grandTotal = tipAmount
+        return grandTotal
+    }
+    
+    let localCurrency: FloatingPointFormatStyle<Double>.Currency =
+       .currency(code: Locale.current.currencyCode ?? "USD")
+    
+    
     var body: some View {
         NavigationView {
             Form {
@@ -51,9 +62,17 @@ struct ContentView: View {
                 } header: {
                     Text("How much tip do you want to leave")
                 }
+ 
+                Section {
+                    Text(tipAmount, format: localCurrency)
+                } header: {
+                    Text("amount per person")
+                }
                 
                 Section {
-                    Text(tipAmount, format: .currency(code: Locale.current.currencyCode ?? "USD"))
+                    Text(finalBillAmount, format: localCurrency)
+                } header: {
+                    Text("Bill Total With Tip")
                 }
             }.navigationTitle("WeSplit")
                 .toolbar {
@@ -67,7 +86,7 @@ struct ContentView: View {
         
     }
 }
-    
+//    
 //    struct ContentView_Previews: PreviewProvider {
 //        static var previews: some View {
 //            ContentView()
