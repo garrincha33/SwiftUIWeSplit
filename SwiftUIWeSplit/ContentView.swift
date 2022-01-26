@@ -11,18 +11,28 @@ struct ContentView: View {
     @State private var numberOfPeople = 2
     @State private var tipPercentage = 0
     
+    let tipPercentages = [10, 15, 20, 25, 0]
+    
     var body: some View {
-        
-        Form {
-            Section {
-                TextField("Amount", value: $checkAmount, format: .currency(code: Locale.current.currencyCode ?? "USD"))
-                    .keyboardType(.decimalPad)
-            }
-            
-            Section {
-                Text(checkAmount, format: .currency(code: Locale.current.currencyCode ?? "USD"))
-            }
+        NavigationView {
+            Form {
+                Section {
+                    TextField("Amount", value: $checkAmount, format: .currency(code: Locale.current.currencyCode ?? "USD"))
+                        .keyboardType(.decimalPad)
+                    
+                    Picker("Number of people", selection: $numberOfPeople) {
+                        ForEach(2..<100) {
+                            Text("\($0) people")
+                        }
+                    }
+                }
+                
+                Section {
+                    Text(checkAmount, format: .currency(code: Locale.current.currencyCode ?? "USD"))
+                }
+            }.navigationTitle("WeSplit")
         }
+        
     }
 }
     
